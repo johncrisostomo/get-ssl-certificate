@@ -1,0 +1,34 @@
+{
+  "name": "get-ssl-certificate",
+  "version": "1.0.0",
+  "description": "A micro-library that returns a website's SSL certificate",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "coverage": "node node_modules/.bin/istanbul cover _mocha -- -R spec",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johncrisostomo/get-ssl-certificate.git"
+  },
+  "keywords": [
+    "ssl",
+    "certificate",
+    "https",
+    "socket"
+  ],
+  "author": "John Crisostomo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johncrisostomo/get-ssl-certificate/issues"
+  },
+  "homepage": "https://github.com/johncrisostomo/get-ssl-certificate#readme",
+  "devDependencies": {
+    "chai": "~1.8.1",
+    "coveralls": "^2.11.14",
+    "istanbul": "^0.4.5",
+    "mocha": "~1.16.2",
+    "sinon": "^1.17.6"
+  }
+}
