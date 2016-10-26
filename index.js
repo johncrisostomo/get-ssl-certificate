@@ -10,20 +10,20 @@ function isEmpty(object) {
 }
 
 module.exports = function(url, callback) {
-  if (url.length <= 0 || typeof url != 'string') {
+  if (url.length <= 0 || typeof url !== 'string') {
     throw Error("A valid URL is required");
   }
 
-  if (typeof callback != "function") {
+  if (typeof callback !== "function") {
     throw Error("Callback function is required");
   }
 
   var req = https.get({hostname: url, agent: false}, function (res) {
     var certificate = res.socket.getPeerCertificate();
     if(isEmpty(certificate) || certificate === null) {
-      callback({message: 'The website did not provide a certificate'}, null);
+      return callback({message: 'The website did not provide a certificate'}, null);
     } else {
-      callback(null, certificate);
+      return callback(null, certificate);
     }
   });
 
