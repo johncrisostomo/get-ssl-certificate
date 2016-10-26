@@ -1,8 +1,6 @@
 var should = require('chai').should(),
     expect = require('chai').expect,
     spy = require('sinon').spy,
-    stub = require('sinon').stub,
-    https = require('https'),
     getSSLCertificate = require('../index');
 
 describe('getSSLCertificate', function() {
