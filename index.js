@@ -9,27 +9,29 @@ function isEmpty(object) {
   return true;
 }
 
-module.exports = function(url, callback) {
+function get(url) {
   if (url.length <= 0 || typeof url !== 'string') {
     throw Error("A valid URL is required");
   }
+  
+  return new Promise(function (resolve, reject) {
+    var req = https.get({hostname: url, agent: false}, function (res) {
+      var certificate = res.socket.getPeerCertificate();
+      if(isEmpty(certificate) || certificate === null) {
+        reject({message: 'The website did not provide a certificate'});
+      } else {
+        resolve(certificate);
+      }
+    });
 
-  if (typeof callback !== "function") {
-    throw Error("Callback function is required");
-  }
+    req.on('error', function(e) {
+      reject(e);
+    });
 
-  var req = https.get({hostname: url, agent: false}, function (res) {
-    var certificate = res.socket.getPeerCertificate();
-    if(isEmpty(certificate) || certificate === null) {
-      return callback({message: 'The website did not provide a certificate'}, null);
-    } else {
-      return callback(null, certificate);
-    }
+    req.end();
   });
-
-  req.on('error', function(e) {
-    callback(e, null)
-  });
-
-  req.end();
 }
+
+module.exports = {
+  get: get,
+};

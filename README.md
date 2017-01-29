@@ -17,13 +17,12 @@ npm install --save get-ssl-certificate
 
 #### Import package:
 ```
-var getSSL = require('get-ssl-certificate');
+var sslCertficate = require('get-ssl-certificate');
 ```
 
-#### Pass a url / domain name and a callback function:
+#### Pass a url / domain name:
 ```
-getSSL('nodejs.org', function(err, certificate) {
-
+sslCertificate.get('nodejs.org').then(function (certificate) {
   console.log(certificate);
   // certificate is a JavaScript object
 
@@ -39,14 +38,8 @@ getSSL('nodejs.org', function(err, certificate) {
 
   console.log(certificate.valid_to)
   // 'Aug 22 23:59:59 2017 GMT'
-
 });
 ```
-
-### Todos
-- 100% coverage through proper stubbing to simulate HTTPS requests
-- Promise-based helper functions
-
 License
 ----
 
