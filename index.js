@@ -15,7 +15,7 @@ function get(url) {
   }
   
   return new Promise(function (resolve, reject) {
-    var req = https.get({hostname: url, agent: false}, function (res) {
+    var req = https.get({hostname: url, agent: false, rejectUnauthorized: false}, function (res) {
       var certificate = res.socket.getPeerCertificate();
       if(isEmpty(certificate) || certificate === null) {
         reject({message: 'The website did not provide a certificate'});
