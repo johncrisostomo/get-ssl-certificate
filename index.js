@@ -13,9 +13,16 @@ function get(url) {
   if (url.length <= 0 || typeof url !== 'string') {
     throw Error("A valid URL is required");
   }
+
+  var options = {
+    hostname: url, 
+    agent: false, 
+    rejectUnauthorized: false,
+    ciphers: "ALL",
+  };
   
   return new Promise(function (resolve, reject) {
-    var req = https.get({hostname: url, agent: false, rejectUnauthorized: false}, function (res) {
+    var req = https.get(options, function (res) {
       var certificate = res.socket.getPeerCertificate();
       if(isEmpty(certificate) || certificate === null) {
         reject({message: 'The website did not provide a certificate'});
