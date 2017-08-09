@@ -17,7 +17,7 @@ npm install --save get-ssl-certificate
 
 #### Import package:
 ```
-var sslCertficate = require('get-ssl-certificate');
+var sslCertificate = require('get-ssl-certificate');
 ```
 
 #### Pass a url / domain name:
