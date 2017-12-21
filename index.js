@@ -20,7 +20,8 @@ function pemEncode(str, n) {
     }
   }
   const returnString = `-----BEGIN CERTIFICATE-----
-${ret.join('')}-----END CERTIFICATE-----`;
+${ret.join('')}
+-----END CERTIFICATE-----`;
   return returnString;
 }
 
@@ -33,7 +34,7 @@ function get(url) {
     hostname: url,
     agent: false,
     rejectUnauthorized: false,
-    ciphers: 'ALL',
+    ciphers: 'ALL'
   };
 
   return new Promise(function(resolve, reject) {
@@ -58,5 +59,5 @@ function get(url) {
 }
 
 module.exports = {
-  get: get,
+  get: get
 };
