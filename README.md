@@ -16,11 +16,13 @@ npm install --save get-ssl-certificate
 ### Usage
 
 #### Import package:
+
 ```
 var sslCertificate = require('get-ssl-certificate');
 ```
 
 #### Pass a url / domain name:
+
 ```
 sslCertificate.get('nodejs.org').then(function (certificate) {
   console.log(certificate);
@@ -38,9 +40,15 @@ sslCertificate.get('nodejs.org').then(function (certificate) {
 
   console.log(certificate.valid_to)
   // 'Aug 22 23:59:59 2017 GMT'
+
+  // If there was a certificate.raw attribute, then you can access certificate.pemEncoded
+  console.log(certificate.pemEncoded)
+  // -----BEGIN CERTIFICATE-----
+  // ...
+  // -----END CERTIFICATE-----
 });
 ```
-License
-----
+
+## License
 
 MIT
