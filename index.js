@@ -11,7 +11,7 @@ function isEmpty(object) {
 function pemEncode(str, n) {
   const ret = []
 
-  for (let i = 1; i <= str.length; i++) {
+  for (var i = 1; i <= str.length; i++) {
     ret.push(str[i - 1])
     const mod = i % n
 
@@ -19,9 +19,11 @@ function pemEncode(str, n) {
       ret.push('\n')
     }
   }
+
   const returnString = `-----BEGIN CERTIFICATE-----
 ${ret.join('')}
 -----END CERTIFICATE-----`
+
   return returnString
 }
 
