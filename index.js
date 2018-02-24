@@ -9,20 +9,18 @@ function isEmpty(object) {
 }
 
 function pemEncode(str, n) {
-  const ret = []
+  var ret = []
 
   for (var i = 1; i <= str.length; i++) {
     ret.push(str[i - 1])
-    const mod = i % n
+    var mod = i % n
 
     if (mod === 0) {
       ret.push('\n')
     }
   }
 
-  const returnString = `-----BEGIN CERTIFICATE-----
-${ret.join('')}
------END CERTIFICATE-----`
+  var returnString = `-----BEGIN CERTIFICATE-----\n${ret.join('')}\n-----END CERTIFICATE-----`
 
   return returnString
 }
