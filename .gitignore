@@ -38,3 +38,7 @@ jspm_packages
 
 coverage
 .coveralls.yml
+
+# OS specific temp files
+.DS_Store
+Thumbs.db
