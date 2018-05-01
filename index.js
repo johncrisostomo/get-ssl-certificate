@@ -20,7 +20,7 @@ function pemEncode(str, n) {
     }
   }
 
-  var returnString = `-----BEGIN CERTIFICATE-----\n${ret.join('')}\n-----END CERTIFICATE-----`
+  var returnString = `-----BEGIN CERTIFICATE-----\n${ret.join('')}-----END CERTIFICATE-----`
 
   return returnString
 }
