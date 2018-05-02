@@ -25,13 +25,16 @@ function pemEncode(str, n) {
   return returnString
 }
 
-function get(url) {
+function get(url, opts) {
+  opts = opts || {};
+	
   if (url.length <= 0 || typeof url !== 'string') {
     throw Error('A valid URL is required')
   }
 
   var options = {
     hostname: url,
+	timeout: opts.timeout,
     agent: false,
     rejectUnauthorized: false,
     ciphers: 'ALL'
@@ -49,12 +52,19 @@ function get(url) {
         resolve(certificate)
       }
     })
-
+	
+	// Set timeout if required
+	if (options.timeout) {
+		req.setTimeout(options.timeout, function() {
+			reject('Timeout triggered after ' + options.timeout + ' ms');
+			req.abort();
+		})
+	}
     req.on('error', function(e) {
-      reject(e)
+      reject(e);
     })
 
-    req.end()
+    req.end();
   })
 }
 
