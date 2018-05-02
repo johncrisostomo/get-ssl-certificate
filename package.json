@@ -1,6 +1,6 @@
 {
   "name": "get-ssl-certificate",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A micro-library that returns a website's SSL certificate",
   "main": "index.js",
   "scripts": {
