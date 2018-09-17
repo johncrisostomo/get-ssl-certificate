@@ -1,14 +1,6 @@
 var https = require('https');
 
 function getOptions(url, options = {}) {
-  var defaultOptions = {
-    hostname: url,
-    agent: false,
-    rejectUnauthorized: false,
-    timeout: 5000,
-    ciphers: 'ALL'
-  };
-
   return {
     ...defaultOptions,
     ...options
@@ -40,16 +32,22 @@ function pemEncode(str, n) {
   return returnString;
 }
 
-function get(url, options) {
+function get(url, timeout) {
   if (url.length <= 0 || typeof url !== 'string') {
     throw Error('A valid URL is required');
   }
 
-  var options = getOptions(url, options);
+  var options = {
+    hostname: url,
+    agent: false,
+    rejectUnauthorized: false,
+    ciphers: 'ALL'
+  };
 
   return new Promise(function(resolve, reject) {
     var req = https.get(options, function(res) {
       var certificate = res.socket.getPeerCertificate();
+
       if (isEmpty(certificate) || certificate === null) {
         reject({ message: 'The website did not provide a certificate' });
       } else {
@@ -59,6 +57,13 @@ function get(url, options) {
         resolve(certificate);
       }
     });
+
+    if (timeout) {
+      req.setTimeout(timeout, function() {
+        reject({ message: 'Request timed out.' });
+        req.abort();
+      });
+    }
 
     req.on('error', function(e) {
       reject(e);
