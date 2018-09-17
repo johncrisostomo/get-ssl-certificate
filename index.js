@@ -1,12 +1,5 @@
 var https = require('https');
 
-function getOptions(url, options = {}) {
-  return {
-    ...defaultOptions,
-    ...options
-  };
-}
-
 function isEmpty(object) {
   for (var prop in object) {
     if (object.hasOwnProperty(prop)) return false;
