@@ -1,6 +1,6 @@
 var https = require('https');
 
-function getOptions(url, options) {
+function getOptions(url, options = {}) {
   var defaultOptions = {
     hostname: url,
     agent: false,
