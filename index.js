@@ -25,31 +25,43 @@ function pemEncode(str, n) {
   return returnString;
 }
 
-function get(url, timeout) {
-  if (url.length <= 0 || typeof url !== 'string') {
-    throw Error('A valid URL is required');
-  }
-
-  var options = {
+function getOptions(url) {
+  return {
     hostname: url,
     agent: false,
     rejectUnauthorized: false,
     ciphers: 'ALL'
   };
+}
+
+function validateUrl(url) {
+  if (url.length <= 0 || typeof url !== 'string') {
+    throw Error('A valid URL is required');
+  }
+}
+
+function handleRequest(options, resolve, reject) {
+  return https.get(options, function(res) {
+    var certificate = res.socket.getPeerCertificate();
+
+    if (isEmpty(certificate) || certificate === null) {
+      reject({ message: 'The website did not provide a certificate' });
+    } else {
+      if (certificate.raw) {
+        certificate.pemEncoded = pemEncode(certificate.raw.toString('base64'), 64);
+      }
+      resolve(certificate);
+    }
+  });
+}
+
+function get(url, timeout) {
+  validateUrl(url);
+
+  var options = getOptions(url);
 
   return new Promise(function(resolve, reject) {
-    var req = https.get(options, function(res) {
-      var certificate = res.socket.getPeerCertificate();
-
-      if (isEmpty(certificate) || certificate === null) {
-        reject({ message: 'The website did not provide a certificate' });
-      } else {
-        if (certificate.raw) {
-          certificate.pemEncoded = pemEncode(certificate.raw.toString('base64'), 64);
-        }
-        resolve(certificate);
-      }
-    });
+    var req = handleRequest(options, resolve, reject);
 
     if (timeout) {
       req.setTimeout(timeout, function() {
