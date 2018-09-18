@@ -1,6 +1,6 @@
 # get-ssl-certificate
 
-## A micro-library that returns a website's SSL certificate
+## A zero-dependency utility that returns a website's SSL certificate
 
 [![Build Status](https://travis-ci.org/johncrisostomo/get-ssl-certificate.svg?branch=master)](https://travis-ci.org/johncrisostomo/get-ssl-certificate)
 [![Coverage Status](https://coveralls.io/repos/github/johncrisostomo/get-ssl-certificate/badge.svg?branch=master)](https://coveralls.io/github/johncrisostomo/get-ssl-certificate?branch=master)
