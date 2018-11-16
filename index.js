@@ -25,12 +25,14 @@ function pemEncode(str, n) {
   return returnString;
 }
 
-function getOptions(url) {
+function getOptions(url, port, protocol) {
   return {
     hostname: url,
     agent: false,
     rejectUnauthorized: false,
-    ciphers: 'ALL'
+    ciphers: 'ALL',
+    port,
+    protocol
   };
 }
 
@@ -55,10 +57,10 @@ function handleRequest(options, resolve, reject) {
   });
 }
 
-function get(url, timeout) {
+function get(url, timeout, port = 443, protocol = 'https:') {
   validateUrl(url);
 
-  var options = getOptions(url);
+  var options = getOptions(url, port, protocol);
 
   return new Promise(function(resolve, reject) {
     var req = handleRequest(options, resolve, reject);
