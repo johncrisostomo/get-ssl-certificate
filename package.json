@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc ./node_modules/.bin/mocha --reporter spec",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
