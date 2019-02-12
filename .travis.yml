@@ -1,11 +1,10 @@
 language: node_js
 node_js:
+  - "11"
   - "10"
   - "9"
   - "8"
   - "7"
-  - "6"
-  - "5"
 cache: yarn
 before_script: npm run test
 script: npm run coverage
