@@ -42,9 +42,9 @@ function validateUrl(url) {
   }
 }
 
-function handleRequest(options, resolve, reject) {
+function handleRequest(options, detailed = false, resolve, reject) {
   return https.get(options, function(res) {
-    var certificate = res.socket.getPeerCertificate();
+    var certificate = res.socket.getPeerCertificate(detailed);
 
     if (isEmpty(certificate) || certificate === null) {
       reject({ message: 'The website did not provide a certificate' });
@@ -57,7 +57,7 @@ function handleRequest(options, resolve, reject) {
   });
 }
 
-function get(url, timeout, port, protocol) {
+function get(url, timeout, port, protocol, detailed) {
   validateUrl(url);
 
   port = port || 443;
@@ -66,7 +66,7 @@ function get(url, timeout, port, protocol) {
   var options = getOptions(url, port, protocol);
 
   return new Promise(function(resolve, reject) {
-    var req = handleRequest(options, resolve, reject);
+    var req = handleRequest(options, detailed, resolve, reject);
 
     if (timeout) {
       req.setTimeout(timeout, function() {
