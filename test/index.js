@@ -145,4 +145,16 @@ describe('Live getSSLCertificate.get()', function() {
         done();
       });
   });
+  
+  it('should timeout at expected time', function(done) {
+    const startTime = new Date();
+    getSSLCertificate
+      .get('59.96.120.246', 1400) // Not sure which unreachable IP to put in here
+      .catch(function(error) {
+        const endTime = new Date();
+        expect(error.message).to.be.equal('Request timed out.');
+        expect(endTime - startTime).to.be.below(1500); // 100 ms of tolerance
+        done();
+      });
+  });
 });
