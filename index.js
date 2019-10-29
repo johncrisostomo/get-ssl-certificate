@@ -64,12 +64,15 @@ function get(url, timeout, port, protocol, detailed) {
   protocol = protocol || 'https:';
 
   var options = getOptions(url, port, protocol);
+  
+  if (timeout)
+    options['timeout'] = timeout;
 
   return new Promise(function(resolve, reject) {
     var req = handleRequest(options, detailed, resolve, reject);
 
     if (timeout) {
-      req.setTimeout(timeout, function() {
+      req.on('timeout', ()=> {
         reject({ message: 'Request timed out.' });
         req.abort();
       });
