@@ -65,14 +65,15 @@ function get(url, timeout, port, protocol, detailed) {
 
   var options = getOptions(url, port, protocol);
   
-  if (timeout)
+  if (timeout) {
     options['timeout'] = timeout;
+  }
 
   return new Promise(function(resolve, reject) {
     var req = handleRequest(options, detailed, resolve, reject);
 
     if (timeout) {
-      req.on('timeout', ()=> {
+      req.on('timeout', () => {
         reject({ message: 'Request timed out.' });
         req.abort();
       });
