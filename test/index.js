@@ -13,9 +13,10 @@ var should = require('chai').should(),
   spy = require('sinon').spy,
   stub = require('sinon').stub,
   https = require('https'),
+  rewire = require('rewire'),
   mockPemEncodedCert = require('./mocks/mock.pem'),
   mockBase64EncodedRawBuffer = require('./mocks/base64buffer.txt'),
-  getSSLCertificate = require('../index');
+  getSSLCertificate = rewire('../index');
 
 describe('Mock getSSLCertificate.get()', function() {
   var mockUrl = 'nodejs.org';
@@ -145,4 +146,33 @@ describe('Live getSSLCertificate.get()', function() {
         done();
       });
   });
+});
+
+describe('PEM Encoding', function() {
+  var raw = '01234567890123456789'
+  var pemEncode = getSSLCertificate.__get__('pemEncode')
+
+  it('should have the correct prefix', function(done) {
+    var encodedLines = pemEncode(raw, 5).split('\n')
+    expect(encodedLines[0]).to.be.equal('-----BEGIN CERTIFICATE-----');
+    done();
+  })
+
+  it('should have the correct suffix', function(done) {
+    var encodedLines = pemEncode(raw, 5).split('\n')
+    expect(encodedLines[encodedLines.length - 1]).to.be.equal('-----END CERTIFICATE-----');
+    done();
+  })
+
+  it('should produce the expected number of lines with each given the maximum line-lengths', function(done) {
+    for(var i = 1; i <= raw.length; i++) {
+      var encodedLines = pemEncode(raw, i).split('\n')
+      expect(encodedLines).to.have.lengthOf(Math.ceil(raw.length / i) + 2);
+      for(var lineIndex = 1; lineIndex < encodedLines.length - 2; lineIndex++) {
+        expect(encodedLines[lineIndex]).to.have.lengthOf(i);
+      }
+      expect(encodedLines[encodedLines.length - 2]).to.have.lengthOf.below(i + 1);
+    }
+    done();
+  })
 });

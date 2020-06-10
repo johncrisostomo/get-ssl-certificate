@@ -15,7 +15,7 @@ function pemEncode(str, n) {
     ret.push(str[i - 1]);
     var mod = i % n;
 
-    if (mod === 0) {
+    if (mod === 0 && i < str.length) {
       ret.push('\n');
     }
   }
